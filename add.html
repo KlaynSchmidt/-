@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+	<nav class="blue-grey darken-1">
+		<a href="index.html" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+	</nav>
+
+	<ul id="slide-out" class="sidenav">
+		<div class="container">
+			<h4><i class="material-icons">folder</i><a href="index.html">Бюро находок</a></h4>
+		</div>
+
+
+
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a href="found.html"><i class="material-icons">assignment_turned_in</i>Найдено</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a href="lost.html"><i class="material-icons">backspace</i>Потерено</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+
+		<li><a href="add.html"><i class="material-icons">add_box</i>Добавить объявление</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+
+		<li><a href="myitem.html"><i class="material-icons">assignment_late</i>Мои объявление</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+	</ul>
+
+	<div class="row">
+		<form class="col s12">
+			<div class="row">
+				<div class="input-field col s6">
+					<input placeholder="" id="first_name" type="text" class="add_title">
+					<label for="first_name">Название</label>
+				</div>
+				<div class="input-field col s6">
+					<input id="contact" type="text" class="add_contact">
+					<label for="last_name">Контакты</label>
+				</div>
+			</div>
+			<div class="row">
+				<div class="input-field col s12">
+					<input value="" id="description" type="text" class="add_description">
+					<label class="active" for="first_name2">Описание</label>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+
+	<select class="browser-default status">
+    <option value="" disabled selected>Выберете статус</option>
+    <option value="1">найдено</option>
+    <option value="0">потерено</option> 
+  	</select>
+
+	<button class="btn waves-effect waves-light " type="submit" name="action" onclick="myFunction()">Добавить
+    <i class="material-icons right"></i>
+  	</button>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+	<script>
+		var input_title = document.querySelector(".add_title");
+		var input_contact = document.querySelector(".add_contact");
+		var input_description = document.querySelector(".add_description");
+		var select_status = document.querySelector(".status");
+
+		function myFunction() {
+			$.ajax({
+				url: "http://192.168.1.34:8000/adding",
+				success: function(arg) {
+					localStorage.setItem('item_id', arg)
+				},
+				data: {
+					title: input_title.value,
+					contact: input_contact.value,
+					desc: input_description.value,
+					status: select_status.value,
+				},
+
+			});
+		};
+
+		$(document).ready(function() {
+			$('.sidenav').sidenav();
+		});
+
+	</script>
+</body>
+
+</html>
